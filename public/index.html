@@ -7,22 +7,55 @@
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      background-color: #000000; /* Changed to black background */
+      background-color: #0f0f0f;
       margin: 0;
       padding: 20px;
-      color: #ffffff; /* Changed text color to white for better visibility */
+      color: #ffffff;
+      position: relative;
+      min-height: 100vh;
     }
+
+    /* Corner decorative images */
+    .corner-image {
+      width: 150px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .logo-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 0 20px;
+    }
+
+    /* Make corner images responsive */
+    @media (max-width: 768px) {
+      .corner-image {
+        width: 100px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .corner-image {
+        width: 70px;
+      }
+    }
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
+      position: relative;
+      z-index: 1;
     }
     h1 {
       text-align: center;
-      color: #ffffff; /* Changed to white for contrast against black background */
+      color: #ffffff;
     }
     .status {
       text-align: center;
-      color: #cccccc; /* Lightened for better visibility against dark background */
+      color: #cccccc;
       margin-bottom: 20px;
     }
     .gallery {
@@ -31,7 +64,7 @@
       gap: 20px;
     }
     .image-card {
-      background: #111111; /* Darkened card background */
+      background: #111111;
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 6px rgba(0,0,0,0.4);
@@ -59,7 +92,7 @@
     .download-btn {
       display: inline-block;
       padding: 8px 15px;
-      background-color: #4a90e2; /* Kept the blue button */
+      background-color: #4a90e2;
       color: white;
       text-decoration: none;
       border-radius: 4px;
@@ -71,7 +104,7 @@
     .no-images {
       text-align: center;
       padding: 50px;
-      background: #111111; /* Darkened for theme consistency */
+      background: #111111;
       color: #ffffff;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.4);
@@ -79,6 +112,12 @@
   </style>
 </head>
 <body>
+  <!-- Corner decorative images -->
+  <div class="logo-container">
+    <img src="images/logo-colegio-alfacoop.png" alt="Decorative Left" class="corner-image">
+    <img src="images/logo-gala.png" alt="Decorative Right" class="corner-image">
+  </div>
+
   <div class="container">
     <h1>Gala Mérito e Excelência</h1>
     
@@ -114,16 +153,18 @@
       let galleryHTML = '<div class="gallery">';
       
       images.forEach(image => {
-        galleryHTML += `
-          <div class="image-card">
-            <div class="image-container">
-              <img src="/images/${image}" alt="Gala photo">
+        if (!image.startsWith('logo-')) { // Don't show logo files in the gallery
+          galleryHTML += `
+            <div class="image-card">
+              <div class="image-container">
+                <img src="images/${image}" alt="Gala photo">
+              </div>
+              <div class="image-actions">
+                <a href="images/${image}" download class="download-btn">Download</a>
+              </div>
             </div>
-            <div class="image-actions">
-              <a href="/images/${image}" download class="download-btn">Download</a>
-            </div>
-          </div>
-        `;
+          `;
+        }
       });
       
       galleryHTML += '</div>';
